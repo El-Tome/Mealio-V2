@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  php-apache:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app/public/views:/var/www/html
+      - ./docker/apache/:/etc/apache2/sites-available/
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mealiodb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin2024
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: admin
+      PMA_PASSWORD: admin2024
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
