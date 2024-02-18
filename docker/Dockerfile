@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:apache
 
 COPY ./app/public/views /var/www/html
 
