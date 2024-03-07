@@ -1,5 +1,8 @@
 <?php
+
+namespace config;
 require_once __DIR__ . '/config.php';
+
 /**
  * Class database
  *
@@ -14,40 +17,39 @@ class database
 {
     protected static ?database $instance = null;
     public $pdo;
-    
+
     public function __construct()
     {
         $this->connect();
     }
-    
+
     /**
      * @return Database
      *
      * function to create new instance of Database if it does not exist
      */
-    public static function getInstance():Database
+    public static function getInstance(): Database
     {
-        if (!self::$instance)
-        {
+        if (!self::$instance) {
             self::$instance = new self();
         }
         return self::$instance;
     }
-    
+
     /**
      * @return void
      *
      * function for connect to database
      */
-    private function connect():void
+    private function connect(): void
     {
         try {
             $this->pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
         } catch (PDOException $e) {
-            die("Erreur lors de la connection à la base de données . ". $e->getMessage());
+            die("Erreur lors de la connection à la base de données . " . $e->getMessage());
         }
     }
-    
+
     /**
      * @param string $request
      * @param array $parameters
@@ -58,20 +60,19 @@ class database
      */
     public function select(
         string $request,
-        array $parameters = [],
+        array  $parameters = [],
         string $pdoOptions = PDO::FETCH_ASSOC
-    ):array
+    ): array
     {
-        try
-        {
+        try {
             $query = $this->pdo->prepare($request);
             $query->execute($parameters);
             return $query->fetchAll($pdoOptions);
         } catch (PDOException $e) {
-            die("La requête SQL a échoué : ". $e->getMessage());
+            die("La requête SQL a échoué : " . $e->getMessage());
         }
     }
-    
+
     /**
      * @param string $request
      * @param array $parameters
@@ -81,24 +82,23 @@ class database
      */
     public function modifyData(
         string $request,
-        array $parameters = []
-    ):void
+        array  $parameters = []
+    ): void
     {
-        try
-        {
+        try {
             $query = $this->pdo->prepare($request);
             $query->execute($parameters);
         } catch (PDOException $e) {
-            die("La requête SQL a échoué : ". $e->getMessage());
+            die("La requête SQL a échoué : " . $e->getMessage());
         }
     }
-    
+
     /**
      * @return int
      *
      * function to get last insert id
      */
-    public function lastInsertId():int
+    public function lastInsertId(): int
     {
         return $this->pdo->lastInsertId();
     }
