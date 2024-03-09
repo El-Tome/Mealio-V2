@@ -49,19 +49,6 @@ function explorerDossier($dossier){
 explorerDossier($dossier);
 ?>
 
-<?php
-const DB_HOST = 'localhost';
-const DB_NAME = 'mealiodb';
-const DB_USER = 'admin';
-const DB_PASSWORD = 'admin2024';
-    try
-    {
-        $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
-    } catch (PDOException $e) {
-            die("Erreur lors de la connection à la base de données . " . $e->getMessage());
-    }
-?>
-
 
 </body>
 </html>
