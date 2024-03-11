@@ -1,4 +1,7 @@
 <?php
+
+use config\database;
+
 require_once __DIR__  . '/../config/database.php';
 
 // this class is used to check data
@@ -25,12 +28,12 @@ class checkData
     }
 
     /**
-     * This function is to check if the length of data are bigger than the max length
+     * This function is to check if the length of data are not too long
      * @param string $data
      * @param int $length
      * @return bool
      */
-    public static function isBiggerThan(string $data, int $length):bool
+    public static function isTooLong(string $data, int $length):bool
     {
         return strlen($data) > $length;
     }
@@ -55,7 +58,7 @@ class checkData
     public static function emailExist(string $email):bool
     {
         $db = database::getInstance();
-        $request = $db->select("SELECT * FROM users WHERE email = :email", ['email' => $email]);
+        $request = $db->select("SELECT * FROM Users WHERE email = :email", ['email' => $email]);
         return !empty($request);
     }
 }

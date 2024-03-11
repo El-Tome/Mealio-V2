@@ -48,7 +48,16 @@ function explorerDossier($dossier){
 // Appel initial pour démarrer l'exploration
 explorerDossier($dossier);
 ?>
-
+<?php
+// connection to bdd
+try {
+    $bdd = new PDO('mysql:host=mysql;dbname=mealiodb', 'admin', 'admin2024');
+    echo "Connexion réussie";
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}
+?>
 
 </body>
 </html>
