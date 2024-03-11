@@ -9,7 +9,7 @@
     <title>Inscription</title>
 </head>
 <body>
-<h1>Inscription</h1>
+    <h1>Inscription</h1>
     <form action="" method="post" id="inscription-form">
         <div>
             <label for="email">Email</label>
@@ -22,6 +22,7 @@
         <div>
             <label for="lastName">Nom</label>
             <input type="text" id="lastName" name="lastName">
+        </div>
         <div>
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password">
@@ -33,6 +34,8 @@
         <div>
             <input type="submit" value="S'inscrire">
         </div>
+
+        <p id="error_message-inscript"></p>
     </form>
     <a href="/connexion">Déjà inscrit ? Connectez-vous</a>
 </body>
