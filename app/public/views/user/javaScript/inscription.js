@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         dataInscript.append("password", password);
         dataInscript.append("passwordConfirm", passwordConfirm);
 
-        fetch('inscription.php', {
+        fetch('techFile/inscription.php', {
             method : 'POST',
             body: dataInscript
         })

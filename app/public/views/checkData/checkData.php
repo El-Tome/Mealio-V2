@@ -4,7 +4,7 @@ use config\database;
 
 require_once __DIR__  . '/../config/database.php';
 
-// this class is used to check data
+// this techFile is used to check data
 class checkData
 {
     /**

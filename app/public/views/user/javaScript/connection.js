@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
         dataConnection.append("email", email);
         dataConnection.append("password", password);
 
-        fetch('connection.php', {
+        fetch('techFile/connection.php', {
             method : 'POST',
             body: dataConnection
         })

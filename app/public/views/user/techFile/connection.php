@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/class/userData.php';
+require_once __DIR__ . '/userData.php';
 
 $info = new users("", "", $_POST['email'], $_POST['password'], "");
 $validInfo = $info->checkDataConnection();

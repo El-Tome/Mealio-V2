@@ -14,7 +14,7 @@ require_once __DIR__ . '/config.php';
  * @const DB_USER
  * @const DB_PASSWORD
  *
- * This class is used to manage the database connection and the SQL requests
+ * This techFile is used to manage the database connection and the SQL requests
  */
 class database
 {
