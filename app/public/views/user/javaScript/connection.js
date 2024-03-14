@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(dataConnection => {
                 if (dataConnection.success) {
-                    // afficher un bouton se connecter
-                    document.getElementById("error_message-connection").textContent = dataConnection.message;
+                    //redirretion to the profile page
+                    window.location.href = "profile.php";
                 } else {
                     document.getElementById("error_message-connection").textContent = dataConnection.message;
                 }
