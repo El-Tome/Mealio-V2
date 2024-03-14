@@ -24,6 +24,6 @@
     </div>
     <p id="error_message-connection"></p>
 </form>
-<a href="/inscription">Pas encore inscrit ? Inscrivez-vous</a>
+<a href="formInscription.php">Pas encore inscrit ? Inscrivez-vous</a>
 </body>
 </html>

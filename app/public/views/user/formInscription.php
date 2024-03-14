@@ -37,6 +37,6 @@
 
         <p id="error_message-inscript"></p>
     </form>
-    <a href="/connexion">Déjà inscrit ? Connectez-vous</a>
+    <a href="formConnection.php">Déjà inscrit ? Connectez-vous</a>
 </body>
 </html>

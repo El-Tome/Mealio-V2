@@ -27,7 +27,7 @@ require_once __DIR__  . '/../../config/database.php';
          *
          * function to check the data
          */
-        public function checkData()
+        public function checkDataInscript(): array
         {
             $length = [255, 255, 255, 255];
             $fields = ["firstname", "lastname", "email", "password"];
@@ -67,7 +67,7 @@ require_once __DIR__  . '/../../config/database.php';
          *
          * function to insert the data in the database
          */
-        public function insertData()
+        public function insertData(): void
         {
             $db = database::getInstance();
             $request = "INSERT INTO Users (permission_id, firstname, lastname, email, password, date_creation, date_last_connection) 
@@ -82,6 +82,45 @@ require_once __DIR__  . '/../../config/database.php';
                 ':date_last_connection' => date('Y-m-d H:i:s')
             ];
             $db->modifyData($request, $parameters);
+        }
+
+        public function checkDataConnection()
+        {
+            if (checkData::isEmpty($this->email) || checkData::isEmpty($this->password)) {
+                return ['success' => false, 'message' => 'Veuillez remplir tous les champs'];
+            }
+
+            if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+                return ['success' => false, 'message' => 'L\'email n\'est pas valide'];
+            }
+
+            $db = database::getInstance();
+            $request = $db->select("SELECT * FROM Users WHERE email = :email", ['email' => $this->email]);
+            if (empty($request)) {
+                return ['success' => false, 'message' => 'L\'email n\'existe pas'];
+            }
+
+            if (!password_verify($this->password, $request[0]['password'])) {
+                return ['success' => false, 'message' => 'Le mot de passe est incorrect'];
+            }
+
+            return ['success' => true, 'message' => 'Connexion réussie'];
+        }
+
+        /**
+         * @return void
+         * function to set in session the user id
+         */
+        public function setSession()
+        {
+            $db = database::getInstance();
+            session_start();
+            $request = $db->select("SELECT * FROM Users WHERE email = :email", ['email' => $this->email]);
+            $_SESSION['user_id'] = $request[0]['id'];
+            $_SESSION['user_firstname'] = $request[0]['firstname'];
+            $_SESSION['user_lastname'] = $request[0]['lastname'];
+            $_SESSION['user_email'] = $request[0]['email'];
+            $_SESSION['user_permission_id'] = $request[0]['permission_id'];
         }
     }
 
