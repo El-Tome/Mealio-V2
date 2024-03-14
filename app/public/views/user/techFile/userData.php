@@ -33,7 +33,11 @@ require_once __DIR__  . '/../../config/database.php';
             $fields = ["firstname", "lastname", "email", "password"];
 
             // check if the data is empty
-            if (checkData::isEmpty($this->firstname) || checkData::isEmpty($this->lastname) || checkData::isEmpty($this->email) || checkData::isEmpty($this->password) || checkData::isEmpty($this->passwordConfirm)) {
+            if (checkData::isEmpty($this->firstname)
+                || checkData::isEmpty($this->lastname)
+                || checkData::isEmpty($this->email)
+                || checkData::isEmpty($this->password)
+                || checkData::isEmpty($this->passwordConfirm)) {
                 return ['success' => false, 'message' => 'Veuillez remplir tous les champs'];
             }
 
@@ -84,7 +88,12 @@ require_once __DIR__  . '/../../config/database.php';
             $db->modifyData($request, $parameters);
         }
 
-        public function checkDataConnection()
+        /**
+         * @return array
+         * function to check the data connection
+         */
+
+        public function checkDataConnection():array
         {
             if (checkData::isEmpty($this->email) || checkData::isEmpty($this->password)) {
                 return ['success' => false, 'message' => 'Veuillez remplir tous les champs'];
@@ -111,7 +120,7 @@ require_once __DIR__  . '/../../config/database.php';
          * @return void
          * function to set in session the user id
          */
-        public function setSession()
+        public function setSession():void
         {
             $db = database::getInstance();
             session_start();
@@ -121,6 +130,63 @@ require_once __DIR__  . '/../../config/database.php';
             $_SESSION['user_lastname'] = $request[0]['lastname'];
             $_SESSION['user_email'] = $request[0]['email'];
             $_SESSION['user_permission_id'] = $request[0]['permission_id'];
+        }
+
+        /**
+         * @return array
+         * this function is to check if data are correct to update the profile
+         */
+        public function checkDataEdition():array
+        {
+            $length = [255, 255, 255, 255];
+            $fields = ["firstname", "lastname", "email", "password"];
+
+            // check if the data is empty
+            if (checkData::isEmpty($this->firstname)
+                || checkData::isEmpty($this->lastname)
+                || checkData::isEmpty($this->email)
+                || checkData::isEmpty($this->password)
+                || checkData::isEmpty($this->passwordConfirm)
+            ) {
+                return ['success' => false, 'message' => 'Veuillez remplir tous les champs'];
+            }
+
+            // check if the length of the data are not too long
+            for ($i = 0; $i < count($fields); $i++) {
+                $field = $fields[$i];
+                if (checkData::isTooLong($this->$field, $length[$i])) {
+                    return ['success' => false, 'message' => 'Le champ ' . $fields[$i] . ' est trop long'];
+                }
+            }
+
+            //check if the email is valid
+            if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+                return ['success' => false, 'message' => 'L\'email n\'est pas valide'];
+            }
+
+            // check if the email exist in the database
+            if (checkData::emailExist($this->email)) {
+                return ['success' => false, 'message' => 'L\'email existe déjà'];
+            }
+            return ['success' => true, 'message' => 'Modification réussie'];
+        }
+
+        /**
+         * @return void
+         * this function is used to update the user data
+         */
+        public function updateData():void
+        {
+            $db = database::getInstance();
+            $request = "UPDATE Users SET firstname = :firstname, lastname = :lastname, email = :email, password = :password WHERE id = :id";
+            $parameters = [
+                ':firstname' => $this->firstname,
+                ':lastname' => $this->lastname,
+                ':email' => $this->email,
+                ':password' => password_hash($this->password, PASSWORD_DEFAULT),
+                ':id' => $_SESSION['user_id']
+            ];
+            $db->modifyData($request, $parameters);
         }
     }
 

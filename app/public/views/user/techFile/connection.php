@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/userData.php';
+session_start();
 
 $info = new users("", "", $_POST['email'], $_POST['password'], "");
 $validInfo = $info->checkDataConnection();

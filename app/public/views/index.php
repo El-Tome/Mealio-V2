@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +13,9 @@
     $randomNumber = rand(1, 100);
     echo "Votre nombre aléatoire est : " . $randomNumber;
     ?>
+</p>
+<p>
+    <?php echo $_SESSION['user_firstname'] ?>
 </p>
 
 <?php
