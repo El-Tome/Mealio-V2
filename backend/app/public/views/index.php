@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,9 +10,6 @@ session_start();
     $randomNumber = rand(1, 100);
     echo "Votre nombre aléatoire est : " . $randomNumber;
     ?>
-</p>
-<p>
-    <?php echo $_SESSION['user_firstname'] ?>
 </p>
 
 <?php
@@ -54,16 +48,20 @@ function explorerDossier($dossier){
 // Appel initial pour démarrer l'exploration
 explorerDossier($dossier);
 ?>
+
 <?php
-// connection to bdd
-try {
-    $bdd = new PDO('mysql:host=mysql;dbname=mealiodb', 'admin', 'admin2024');
-    echo "Connexion réussie";
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
+const DB_HOST = 'mysql';
+const DB_NAME = 'mealiodb';
+const DB_USER = 'admin';
+const DB_PASSWORD = 'admin2024';
+    try
+    {
+        $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
+    } catch (PDOException $e) {
+            die("Erreur lors de la connection à la base de données . " . $e->getMessage());
+    }
 ?>
+
 
 </body>
 </html>
