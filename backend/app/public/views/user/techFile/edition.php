@@ -1,7 +1,17 @@
 <?php
 require_once __DIR__ . '/userData.php';
 
-$info = new users($_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['password'], $_POST['passwordConfirm']);
+// Get JSON input
+$data = json_decode(file_get_contents('php://input'), true);
+
+$firstName = $data['firstName'];
+$lastName = $data['lastName'];
+$email = $data['email'];
+$password = $data['password'];
+$passwordConfirm = $data['passwordConfirm'];
+
+$info = new users($firstName, $lastName, $email, $password, $passwordConfirm);
+
 $validInfo = $info->checkDataUpdate();
 
 if ($validInfo['success']) {

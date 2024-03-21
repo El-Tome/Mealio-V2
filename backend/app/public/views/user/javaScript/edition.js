@@ -19,9 +19,19 @@ document.addEventListener("DOMContentLoaded", function() {
         dataEdition.append("password", password);
         dataEdition.append("passwordConfirm", passwordConfirm);
 
+        let json = {};
+
+
+        for (const [key, value] of dataEdition.entries()) {
+            json[key] = value;
+        }
+
         fetch('techFile/edition.php', {
             method : 'POST',
-            body: dataEdition
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json)
         })
             .then(response => response.json())
             .then(dataInscript => {

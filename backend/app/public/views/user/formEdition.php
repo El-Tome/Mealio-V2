@@ -18,15 +18,15 @@ session_start();
     <form action="" method="post" id="edition-form">
         <div>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="<?= $_SESSION['user_email²']; ?>">
+            <input type="email" id="email" name="email">
         </div>
         <div>
             <label for="firstName">Prénom</label>
-            <input type="text" id="firstName" name="firstName" value="<?= $_SESSION['user_firstname']; ?>">
+            <input type="text" id="firstName" name="firstName" >
         </div>
         <div>
             <label for="lastName">Nom</label>
-            <input type="text" id="lastName" name="lastName" value="<?= $_SESSION['user_lastname']; ?>">
+            <input type="text" id="lastName" name="lastName" >
         </div>
         <div>
             <label for="password">Mot de passe</label>

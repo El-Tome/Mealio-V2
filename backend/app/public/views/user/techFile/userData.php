@@ -136,7 +136,7 @@ require_once __DIR__  . '/../../config/database.php';
          * @return array
          * this function is to check if data are correct to update the profile
          */
-        public function checkDataEdition():array
+        public function checkDataUpdate():array
         {
             $length = [255, 255, 255, 255];
             $fields = ["firstname", "lastname", "email", "password"];
