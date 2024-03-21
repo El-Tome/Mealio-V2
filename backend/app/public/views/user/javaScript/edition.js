@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let json = {};
 
-
         for (const [key, value] of dataEdition.entries()) {
             json[key] = value;
         }

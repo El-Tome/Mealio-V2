@@ -19,9 +19,18 @@ document.addEventListener("DOMContentLoaded", function() {
         dataInscript.append("password", password);
         dataInscript.append("passwordConfirm", passwordConfirm);
 
+        let json = {};
+
+        for (const [key, value] of dataInscript.entries()) {
+            json[key] = value;
+        }
+
         fetch('techFile/inscription.php', {
             method : 'POST',
-            body: dataInscript
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json)
         })
             .then(response => response.json())
             .then(dataInscript => {

@@ -2,7 +2,12 @@
 require_once __DIR__ . '/userData.php';
 session_start();
 
-$info = new users("", "", $_POST['email'], $_POST['password'], "");
+// Get JSON input
+$data = json_decode(file_get_contents('php://input'), true);
+$email = $data['email'];
+$password = $data['password'];
+
+$info = new users("", "", $email, $password, "");
 $validInfo = $info->checkDataConnection();
 
 if ($validInfo['success']) {

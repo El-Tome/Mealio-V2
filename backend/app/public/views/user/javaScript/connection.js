@@ -13,9 +13,18 @@ document.addEventListener("DOMContentLoaded", function() {
         dataConnection.append("email", email);
         dataConnection.append("password", password);
 
+        let json = {};
+
+        for (const [key, value] of dataConnection.entries()) {
+            json[key] = value;
+        }
+
         fetch('techFile/connection.php', {
             method : 'POST',
-            body: dataConnection
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json)
         })
             .then(response => response.json())
             .then(dataConnection => {
