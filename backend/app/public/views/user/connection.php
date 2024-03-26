@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/userData.php';
+
+use class\Users;
+
+require_once __DIR__ . '/../class/Users.php';
 
 // Get JSON input
 $data = json_decode(file_get_contents('php://input'), true);

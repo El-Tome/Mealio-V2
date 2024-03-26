@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Attend que le document soit chargé
 
     // formaulaire d'inscription
-    let editionForm = document.getElementById("edition-form");
-    editionForm.addEventListener("submit", function(event) {
+    let inscriptionForm = document.getElementById("inscription-form");
+    inscriptionForm.addEventListener("submit", function(event) {
         event.preventDefault();
 
         let lastName = document.getElementById("lastName").value;
@@ -12,20 +12,20 @@ document.addEventListener("DOMContentLoaded", function() {
         let password = document.getElementById("password").value;
         let passwordConfirm = document.getElementById("passwordConfirm").value;
 
-        let dataEdition = new FormData();
-        dataEdition.append("firstName", firstName);
-        dataEdition.append("lastName", lastName);
-        dataEdition.append("email", email);
-        dataEdition.append("password", password);
-        dataEdition.append("passwordConfirm", passwordConfirm);
+        let dataInscript = new FormData();
+        dataInscript.append("firstName", firstName);
+        dataInscript.append("lastName", lastName);
+        dataInscript.append("email", email);
+        dataInscript.append("password", password);
+        dataInscript.append("passwordConfirm", passwordConfirm);
 
         let json = {};
 
-        for (const [key, value] of dataEdition.entries()) {
+        for (const [key, value] of dataInscript.entries()) {
             json[key] = value;
         }
 
-        fetch('techFile/edition.php', {
+        fetch('../inscription.php', {
             method : 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", function() {
         })
             .then(response => response.json())
             .then(dataInscript => {
-                if (dataEdition.success) {
+                if (dataInscript.success) {
                     // afficher un bouton se connecter
-                    document.getElementById("error_message-edition").textContent = dataEdition.message;
+                    document.getElementById("error_message-inscript").textContent = dataInscript.message;
                 } else {
-                    document.getElementById("error_message-edition").textContent = dataEdition.message;
+                    document.getElementById("error_message-inscript").textContent = dataInscript.message;
                 }
             })
             .catch(error => {

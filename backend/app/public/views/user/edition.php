@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/userData.php';
+
+use class\Users;
+
+require_once __DIR__ . '/../class/Users.php';
 session_start();
 
 // Get JSON input

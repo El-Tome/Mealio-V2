@@ -2,10 +2,10 @@
 
 use config\database;
 
-require_once __DIR__  . '/../config/database.php';
+require_once __DIR__ . '/../config/Database.php';
 
-// this techFile is used to check data
-class checkData
+// this techFile is used to manipulate data
+class Data
 {
     /**
      * This function is used to check if the data is empty

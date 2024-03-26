@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
             json[key] = value;
         }
 
-        fetch('techFile/connection.php', {
+        fetch('../connection.php', {
             method : 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(dataConnection => {
                 if (dataConnection.success) {
                     //redirretion to the profile page
-                    window.location.href = "profile.php";
+                    document.getElementById("error_message-connection").textContent = dataConnection.message;
                 } else {
                     document.getElementById("error_message-connection").textContent = dataConnection.message;
                 }
