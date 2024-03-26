@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/userData.php';
+session_start();
 
 // Get JSON input
 $data = json_decode(file_get_contents('php://input'), true);
@@ -15,7 +16,7 @@ $info = new users($firstName, $lastName, $email, $password, $passwordConfirm);
 $validInfo = $info->checkDataUpdate();
 
 if ($validInfo['success']) {
-    $info->insertData();
+    $info->updateData();
 }
 
 // indiquer au client que la réponse contient des données JSON

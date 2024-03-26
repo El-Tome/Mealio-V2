@@ -33,34 +33,42 @@ require_once __DIR__  . '/../../config/database.php';
             $fields = ["firstname", "lastname", "email", "password"];
 
             // check if the data is empty
-            if (checkData::isEmpty($this->firstname)
+            if (
+                checkData::isEmpty($this->firstname)
                 || checkData::isEmpty($this->lastname)
                 || checkData::isEmpty($this->email)
                 || checkData::isEmpty($this->password)
-                || checkData::isEmpty($this->passwordConfirm)) {
+                || checkData::isEmpty($this->passwordConfirm)
+            )
+            {
                 return ['success' => false, 'message' => 'Veuillez remplir tous les champs'];
             }
 
             // check if the length of the data are not too long
-            for ($i = 0; $i < count($fields); $i++) {
+            for ($i = 0; $i < count($fields); $i++)
+            {
                 $field = $fields[$i];
-                if (checkData::isTooLong($this->$field, $length[$i])) {
+                if (checkData::isTooLong($this->$field, $length[$i]))
+                {
                     return ['success' => false, 'message' => 'Le champ ' . $fields[$i] . ' est trop long'];
                 }
             }
 
             // check if the password and the password confirm are the same
-            if (!checkData::isSame($this->password, $this->passwordConfirm)) {
+            if (!checkData::isSame($this->password, $this->passwordConfirm))
+            {
                 return ['success' => false, 'message' => 'Les mots de passe ne sont pas identiques'];
             }
 
             //check if the email is valid
-            if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            if (!filter_var($this->email, FILTER_VALIDATE_EMAIL))
+            {
                 return ['success' => false, 'message' => 'L\'email n\'est pas valide'];
             }
 
             // check if the email exist in the database
-            if (checkData::emailExist($this->email)) {
+            if (checkData::emailExist($this->email))
+            {
                 return ['success' => false, 'message' => 'L\'email existe déjà'];
             }
             return ['success' => true, 'message' => 'Inscription réussie'];
@@ -133,6 +141,21 @@ require_once __DIR__  . '/../../config/database.php';
         }
 
         /**
+         * @return void
+         * this method is used to update the date of the last connection of the user
+         */
+        public function updateDateConnection():void
+        {
+            $db = database::getInstance();
+            $request = "UPDATE Users SET date_last_connection = :date WHERE id = :id";
+            $parameters = [
+                ':date' => date('Y-m-d H:i:s'),
+                ':id' => $_SESSION['user_id']
+            ];
+            $db->modifyData($request, $parameters);
+        }
+
+        /**
          * @return array
          * this function is to check if data are correct to update the profile
          */
@@ -142,30 +165,36 @@ require_once __DIR__  . '/../../config/database.php';
             $fields = ["firstname", "lastname", "email", "password"];
 
             // check if the data is empty
-            if (checkData::isEmpty($this->firstname)
+            if (
+                checkData::isEmpty($this->firstname)
                 || checkData::isEmpty($this->lastname)
                 || checkData::isEmpty($this->email)
                 || checkData::isEmpty($this->password)
                 || checkData::isEmpty($this->passwordConfirm)
-            ) {
+            )
+            {
                 return ['success' => false, 'message' => 'Veuillez remplir tous les champs'];
             }
 
             // check if the length of the data are not too long
-            for ($i = 0; $i < count($fields); $i++) {
+            for ($i = 0; $i < count($fields); $i++)
+            {
                 $field = $fields[$i];
-                if (checkData::isTooLong($this->$field, $length[$i])) {
+                if (checkData::isTooLong($this->$field, $length[$i]))
+                {
                     return ['success' => false, 'message' => 'Le champ ' . $fields[$i] . ' est trop long'];
                 }
             }
 
             //check if the email is valid
-            if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            if (!filter_var($this->email, FILTER_VALIDATE_EMAIL))
+            {
                 return ['success' => false, 'message' => 'L\'email n\'est pas valide'];
             }
 
             // check if the email exist in the database
-            if (checkData::emailExist($this->email)) {
+            if (checkData::emailExist($this->email) and $_SESSION['user_email'] !== $this->email)
+            {
                 return ['success' => false, 'message' => 'L\'email existe déjà'];
             }
             return ['success' => true, 'message' => 'Modification réussie'];
@@ -178,12 +207,13 @@ require_once __DIR__  . '/../../config/database.php';
         public function updateData():void
         {
             $db = database::getInstance();
-            $request = "UPDATE Users SET firstname = :firstname, lastname = :lastname, email = :email, password = :password WHERE id = :id";
+            $request = "UPDATE Users SET firstname = :firstname, lastname = :lastname, email = :email, password = :password, date_last_connection = :date WHERE id = :id";
             $parameters = [
                 ':firstname' => $this->firstname,
                 ':lastname' => $this->lastname,
                 ':email' => $this->email,
                 ':password' => password_hash($this->password, PASSWORD_DEFAULT),
+                ':date' => date('Y-m-d H:i:s'),
                 ':id' => $_SESSION['user_id']
             ];
             $db->modifyData($request, $parameters);

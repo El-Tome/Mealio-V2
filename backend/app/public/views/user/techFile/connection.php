@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/userData.php';
-session_start();
 
 // Get JSON input
 $data = json_decode(file_get_contents('php://input'), true);
+
 $email = $data['email'];
 $password = $data['password'];
 
@@ -12,6 +12,7 @@ $validInfo = $info->checkDataConnection();
 
 if ($validInfo['success']) {
     $info->setSession();
+    $info->updateDateConnection();
 }
 // indiquer au client que la réponse contient des données JSON
 header('Content-Type: application/json');
