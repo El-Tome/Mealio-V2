@@ -178,6 +178,19 @@ class Users extends Data
 
     /**
      * @return void
+     * this function is used to delete the user
+     */
+    public function deleteUser():void
+    {
+        session_start();
+        $db = database::getInstance();
+        $request = "DELETE FROM Users WHERE id = :id";
+        $parameters = [':id' => $_SESSION['user_id']];
+        $db->modifyData($request, $parameters);
+    }
+
+    /**
+     * @return void
      * this method is used to update the date of the last connection of the user
      */
     public function updateDateConnection(): void
