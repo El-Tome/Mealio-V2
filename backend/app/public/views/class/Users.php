@@ -149,6 +149,35 @@ class Users extends Data
 
     /**
      * @return void
+     * function to unset the session
+     */
+    public function unsetSession(): void
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+    }
+
+    /**
+     * @return array
+     * this function is used to get the data of the user
+     */
+    public function getUserInfo():array
+    {
+        session_start();
+        $db = database::getInstance();
+        $request = $db->select("SELECT * FROM Users WHERE id = :id", ['id' => $_SESSION['user_id']]);
+        return [
+            'user_id' => $request[0]['id'],
+            'firstname' => $request[0]['firstname'],
+            'lastname' => $request[0]['lastname'],
+            'email' => $request[0]['email'],
+            'user_permission_id' => $request[0]['permission_id']
+        ];
+    }
+
+    /**
+     * @return void
      * this method is used to update the date of the last connection of the user
      */
     public function updateDateConnection(): void
@@ -225,6 +254,8 @@ class Users extends Data
         ];
         $db->modifyData($request, $parameters);
     }
+
+
 }
 
 
